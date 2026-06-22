@@ -1,0 +1,18 @@
+{
+  "name": "javascript-arena",
+  "version": "1.0.0",
+  "description": "A small arena for JavaScript coding challenges and battles.",
+  "type": "commonjs",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "javascript",
+    "arena",
+    "challenges"
+  ],
+  "author": "Konrad Sopala",
+  "license": "MIT"
+}
