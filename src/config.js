@@ -12,15 +12,14 @@ const config = {
   host: process.env.HOST || '0.0.0.0',
 
   // Gameplay limits
-  maxPlayersPerArena: 4,
-  maxRoundsPerMatch: 6,
-  turnTimeoutMs: 3000,
+  maxPlayersPerArena: 16,
+  maxRoundsPerMatch: 25,
+  turnTimeoutMs: 8000,
 
   // Feature flags
   features: {
-    spectatorMode: false,
-    rankedMatches: false,
-    quickMatch: true,
+    spectatorMode: true,
+    rankedMatches: true,
   },
 
   // Logging

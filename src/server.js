@@ -2,30 +2,25 @@
 
 const http = require('http');
 const config = require('./config');
+const { buildRouter } = require('./routes');
+const logger = require('./utils/logger');
 
 /**
- * Minimal HTTP entry point. Real routing is layered on in later changes; for
- * now the server answers a single health check so deployments have something
- * to probe.
+ * Build the HTTP server, dispatching every request through the application
+ * router. The router owns matching, parameter extraction and error handling.
+ *
+ * @returns {import('http').Server} a configured (but not listening) server
  */
 function createServer() {
-  return http.createServer((req, res) => {
-    if (req.url === '/health') {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 'ok', version: require('../package.json').version }));
-      return;
-    }
-
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Not found' }));
-  });
+  const router = buildRouter();
+  const listener = router.toListener();
+  return http.createServer(listener);
 }
 
 if (require.main === module) {
   const server = createServer();
   server.listen(config.port, config.host, () => {
-    // eslint-disable-next-line no-console
-    console.log(`Arena listening on http://${config.host}:${config.port}`);
+    logger.info('arena listening', { host: config.host, port: config.port });
   });
 }
 
